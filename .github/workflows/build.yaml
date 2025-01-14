@@ -5,22 +5,14 @@ on:
   workflow_run:
     workflows: 
       - SonarQube
-      - Dependency Check
+      - dependency-check
     types:
       - completed
 
 jobs:
-  # Trabajo independiente inicial
-  validate:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Echo validation
-        run: echo "Starting validation job - this job has no dependencies."
-
-  # Trabajo principal: Build
   build:
     runs-on: ubuntu-latest
-    needs: [validate] # Ahora depende del trabajo "validate"
+    needs: [build, depchecktest]  # Asegúrate de que estos nombres coinciden exactamente con los nombres de los jobs
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
     steps:
       - name: Checkout code
