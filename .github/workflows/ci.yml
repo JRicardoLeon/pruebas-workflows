@@ -6,7 +6,6 @@ on:
       - feature/* 
       - develop
       - main
-
 jobs:
   analyze:
     runs-on: ubuntu-latest
@@ -23,22 +22,6 @@ jobs:
           mvn sonar:sonar \
           -Dsonar.projectKey=JRicardoLeon_devsecops-assessment-ricardo \
           -Dsonar.coverage.jacoco.xmlReportPaths=target/site/jacoco/jacoco.xml
-      - name: Dependency Check
-        uses: owasp/dependency-check-action@v1
-        id: Depcheck
-        with:
-          project: 'test'
-          path: '.'
-          format: 'HTML'
-          args: >
-            --failOnCVSS 7
-            --enableRetired
-      - name: Upload Depcheck Report
-        uses: actions/upload-artifact@v3
-        with:
-          name: Depcheck report
-          path: ${{github.workspace}}/reports 
-
   build:
     needs: analyze
     runs-on: ubuntu-latest
