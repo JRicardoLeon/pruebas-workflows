@@ -16,7 +16,7 @@ jobs:
         run: mvn clean package
       - name: Get POM version
         run: |
-          mvn -q -Dexec.executable="printf" -Dexec.args='${project.version}'
+          mvn -q -Dexec.executable="printf" -Dexec.args='${project.version}' help:property -Dproperty=project.version
         id: get_version
       - name: Get branch name
         run: echo "::set-output name=branch::$(git rev-parse --abbrev-ref HEAD)"
