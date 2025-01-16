@@ -14,9 +14,9 @@ jobs:
           distribution: 'temurin'
       - name: Build with Maven
         run: mvn clean package
-      - name: Get POM version
+      - name: Get COMMIT
         run: |
-          mvn -q -Dexec.executable="printf" -Dexec.args='${project.version}' help:property -Dproperty=project.version
+          COMMIT=$(git rev-parse HEAD)
         id: get_version
       - name: Get branch name
         run: echo "::set-output name=branch::$(git rev-parse --abbrev-ref HEAD)"
