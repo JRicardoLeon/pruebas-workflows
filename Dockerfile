@@ -4,7 +4,6 @@ COPY pom.xml .
 RUN apk add --no-cache maven
 RUN mvn package -DskipTests 
 
-FROM eclipse-temurin:17-jre-alpine
 WORKDIR /app
 COPY --from=build /app/target/*.jar app.jar
 COPY application.properties . 
