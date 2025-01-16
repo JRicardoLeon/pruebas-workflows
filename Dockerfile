@@ -1,9 +1,10 @@
-FROM maven:3.8.5-jdk-17-alpine AS build
+FROM eclipse-temurin:17-jre-alpine AS builder
 WORKDIR /app
 COPY pom.xml .
+RUN apk add --no-cache maven
 RUN mvn package -DskipTests 
 
-FROM openjdk:17-jdk-alpine
+FROM eclipse-temurin:17-jre-alpine
 WORKDIR /app
 COPY --from=build /app/target/*.jar app.jar
 COPY application.properties . 
