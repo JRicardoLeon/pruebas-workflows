@@ -1,19 +1,23 @@
 name: Dependency Check
 
 on:
-  pull_request:
-    branches: [ 'feature/*', 'develop', 'main' ]
+  repository_dispatch:
+    types: [dependency_check]
 
 jobs:
   dependency-check:
     runs-on: ubuntu-latest
-    name: depecheck_test
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'temurin'
       - name: Build project with Maven
         run: mvn clean install
-      - name: Depcheck
+      - name: Dependency Check
         uses: dependency-check/Dependency-Check_Action@main
         id: Depcheck
         with:
@@ -25,7 +29,7 @@ jobs:
             --failOnCVSS 7
             --enableRetired
       - name: Upload Test results
-        uses: actions/upload-artifact@master
+        uses: actions/upload-artifact@v3
         with:
            name: Depcheck report
-           path: ${{github.workspace}}/reports
+           path: ${{github.workspace}}/reports 

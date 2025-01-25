@@ -1,11 +1,6 @@
 name: Build
 
 on:
-  pull_request:
-    branches:
-      - feature/*
-      - develop
-      - main
   workflow_dispatch:
 
 jobs:
@@ -21,8 +16,11 @@ jobs:
           distribution: 'temurin'
       - name: Build with Maven
         run: mvn clean package
-      - name: Upload JAR Artifact
-        uses: actions/upload-artifact@v3
+
+      - name: Trigger dependency check
+        if: success()
+        uses: peter-evans/repository-dispatch@v2
         with:
-          name: my-project-jar
-          path: target/*.jar
+          token: ${{ secrets.GITHUB_TOKEN }}
+          repository: ${{ github.repository }}
+          event-type: dependency_check 
