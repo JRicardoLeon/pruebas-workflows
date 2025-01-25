@@ -10,11 +10,6 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      - name: Set up JDK 17
-        uses: actions/setup-java@v3
-        with:
-          java-version: '17'
-          distribution: 'temurin'
       - name: Build project with Maven
         run: mvn clean install
       - name: Dependency Check
@@ -29,7 +24,7 @@ jobs:
             --failOnCVSS 7
             --enableRetired
       - name: Upload Test results
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@master
         with:
            name: Depcheck report
-           path: ${{github.workspace}}/reports 
+           path: ${{github.workspace}}/reportss 
