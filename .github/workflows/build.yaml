@@ -3,7 +3,8 @@ name: Pipeline CI
 on:
   pull_request:
     branches:
-      - feature/* 
+      - feature/*
+  workflow_dispatch:
 
 jobs:
   build:
