@@ -1,7 +1,9 @@
 name: Build
 
 on:
-  workflow_dispatch:
+  pull_request:
+    branches:
+      - feature/* 
 
 jobs:
   build:
@@ -24,3 +26,10 @@ jobs:
           token: ${{ secrets.TOKEN_GITHUB }}
           repository: ${{ github.repository }}
           event-type: dependency_check 
+      - name: Trigger SonarQube
+        if: success()
+        uses: peter-evans/repository-dispatch@v2
+        with:
+          token: ${{ secrets.TOKEN_GITHUB }}
+          repository: ${{ github.repository }}
+          event-type: sonarqube 
