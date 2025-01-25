@@ -21,6 +21,6 @@ jobs:
         if: success()
         uses: peter-evans/repository-dispatch@v2
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.TOKEN_GITHUB }}
           repository: ${{ github.repository }}
           event-type: dependency_check 
