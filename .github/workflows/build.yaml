@@ -1,4 +1,4 @@
-name: Build
+name: Pipeline CI
 
 on:
   pull_request:
@@ -32,4 +32,4 @@ jobs:
         with:
           token: ${{ secrets.TOKEN_GITHUB }}
           repository: ${{ github.repository }}
-          event-type: sonarqube 
+          event-type: sonarcloud_analysis
