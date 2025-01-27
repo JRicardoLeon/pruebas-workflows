@@ -17,11 +17,8 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
 
-      - name: Get branch name and project version
-        run: |
-          BRANCH=$(echo ${{ github.ref_name }} | cut -d '/' -f 3)
-          echo "::set-output name=branch::${BRANCH}"
-        id: get_info
+      - name: Build with Maven
+        run: mvn clean package
 
       - name: Login to Docker Hub
         uses: docker/login-action@v2
@@ -34,6 +31,6 @@ jobs:
         with:
           push: true
           tags: |
-            ricardoleon10/workflows:${{ steps.get_info.outputs.branch }}_${{ steps.get_info.outputs.version }}
+            ricardoleon10/workflows:${{ github.sha }} 
           file: ./Dockerfile
           context: . 
