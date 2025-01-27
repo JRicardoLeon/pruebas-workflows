@@ -34,3 +34,10 @@ jobs:
           token: ${{ secrets.TOKEN_GITHUB }}
           repository: ${{ github.repository }}
           event-type: sonarcloud_analysis
+      - name: Trigger Docker Image Build
+        if: success() 
+        uses: peter-evans/repository-dispatch@v2
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          repository: ${{ github.repository }}
+          event-type: build_docker_image 
